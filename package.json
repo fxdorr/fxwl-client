@@ -21,7 +21,12 @@
   },
   "dependencies": {
     "@electron-toolkit/preload": "^2.0.0",
-    "@electron-toolkit/utils": "^1.0.2"
+    "@electron-toolkit/utils": "^1.0.2",
+    "@icon-park/vue-next": "^1.4.2",
+    "element-plus": "^2.3.9",
+    "pinia": "^2.1.6",
+    "sass": "^1.64.2",
+    "scss": "^0.2.4"
   },
   "devDependencies": {
     "@electron-toolkit/tsconfig": "^1.0.1",
