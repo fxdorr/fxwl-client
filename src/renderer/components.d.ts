@@ -6,8 +6,8 @@
 export {}
 
 declare module 'vue' {
-  export interface GlobalComponents {
-    ElButton: typeof import('element-plus/es')['ElButton']
-    Versions: typeof import('./src/components/Versions.vue')['default']
-  }
+    export interface GlobalComponents {
+        ElButton: typeof import('element-plus/es')['ElButton']
+        Versions: typeof import('./src/components/Versions.vue')['default']
+    }
 }
