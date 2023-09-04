@@ -1,4 +1,8 @@
-import { defineConfig, externalizeDepsPlugin } from 'electron-vite'
+import {
+    defineConfig,
+    externalizeDepsPlugin,
+    bytecodePlugin,
+} from 'electron-vite'
 import vue from '@vitejs/plugin-vue'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
@@ -9,11 +13,11 @@ import path from 'path'
 export default defineConfig({
     // 主程序
     main: {
-        plugins: [externalizeDepsPlugin()],
+        plugins: [externalizeDepsPlugin(), bytecodePlugin()],
     },
-    // 预载器
+    // 预加载脚本
     preload: {
-        plugins: [externalizeDepsPlugin()],
+        plugins: [externalizeDepsPlugin(), bytecodePlugin()],
     },
     // 渲染器
     renderer: {

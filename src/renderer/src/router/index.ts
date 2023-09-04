@@ -30,6 +30,12 @@ const routes: Array<RouteRecordRaw> = [
         meta: { title: '配置项' },
         component: () => import('@/views/index/Config.vue'),
     },
+    {
+        path: '/client/index',
+        name: 'client/index',
+        meta: { title: '客户端' },
+        component: () => import('@/views/client/Index.vue'),
+    },
 ]
 // 匹配根路径
 const config: any = {}

@@ -1,5 +1,5 @@
 appId: net.fxri.app
-productName: fxwl-client
+productName: 方弦物联
 directories:
     buildResources: build
 files:

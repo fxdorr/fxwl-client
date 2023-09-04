@@ -67,10 +67,10 @@ export const doParam = {
         // 监听数据
         watch(
             base[name],
-            (value) =>
+            (data) =>
                 localStorage.setItem(
                     name,
-                    !isString(value) ? JSON.stringify(value) : String(value),
+                    !isString(data) ? JSON.stringify(data) : String(data),
                 ),
             { deep: true },
         )
@@ -108,8 +108,13 @@ export const doView = {
     /**
      * 跳转页面
      */
-    jump: function (url?: string, param?: LocationQueryRaw): void {
-        imView.router && imView.router.push({ path: url, query: param })
+    jump: function (url: string, param?: LocationQueryRaw): void {
+        // 检查url
+        if (!isUrl(url)) {
+            imView.router && imView.router.push({ path: url, query: param })
+        } else {
+            window.location.href = url
+        }
     },
     /**
      * 处理URL

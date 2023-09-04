@@ -7,32 +7,16 @@ import { defineStore } from 'pinia'
 // 定义数据
 export const data = {
     /**
-     * 标题
+     * 地址
      */
-    title: '方弦物联',
+    host: '0.0.0.0',
     /**
-     * 调试模式
+     * 端口
      */
-    debug: false,
-    /**
-     * 页面地址
-     */
-    url_host: 'http://127.0.0.1',
-    /**
-     * 接口地址
-     */
-    api_host: 'http://127.0.0.1',
-    /**
-     * 资源地址
-     */
-    uri_host: 'http://127.0.0.1',
-    /**
-     * 面板索引
-     */
-    panel_index: '0',
+    port: '2501',
 }
 // 定义存储
-const store = defineStore('app', {
+const store = defineStore('server', {
     state: () => JSON.parse(JSON.stringify(data)),
     persist: true,
 })

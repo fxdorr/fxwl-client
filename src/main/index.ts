@@ -1,16 +1,22 @@
+// +----------------------------------------------------------------------
+// | Author 唐启云 <tqy@fxri.net>
+// +----------------------------------------------------------------------
+// | Category 方弦研究所
+// +----------------------------------------------------------------------
 import { app, shell, BrowserWindow } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
-import icon from '../../resources/icon.png?asset'
+import icon from '../../resources/icon_mini.png?asset'
+import { doEvent } from './module'
 
-function createWindow(): void {
+function createWindow(): BrowserWindow {
     // Create the browser window.
     const mainWindow = new BrowserWindow({
         width: 1280,
         height: 720,
         show: false,
         autoHideMenuBar: true,
-        ...(process.platform === 'linux' ? { icon } : {}),
+        icon,
         webPreferences: {
             preload: join(__dirname, '../preload/index.js'),
             sandbox: false,
@@ -33,6 +39,7 @@ function createWindow(): void {
     } else {
         mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
     }
+    return mainWindow
 }
 
 // This method will be called when Electron has finished
@@ -40,7 +47,7 @@ function createWindow(): void {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
     // Set app user model id for windows
-    electronApp.setAppUserModelId('com.electron')
+    electronApp.setAppUserModelId('net.fxri')
 
     // Default open or close DevTools by F12 in development
     // and ignore CommandOrControl + R in production.
@@ -49,7 +56,11 @@ app.whenReady().then(() => {
         optimizer.watchWindowShortcuts(window)
     })
 
-    createWindow()
+    // 创建窗口
+    const mainWindow = createWindow()
+
+    // 注册事件
+    doEvent.register(mainWindow)
 
     app.on('activate', function () {
         // On macOS it's common to re-create a window in the app when the

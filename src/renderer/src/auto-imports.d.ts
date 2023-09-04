@@ -13,7 +13,6 @@ declare global {
   const defineComponent: typeof import('vue')['defineComponent']
   const doInfo: typeof import('./libs/module')['doInfo']
   const doParam: typeof import('./libs/module')['doParam']
-  const doSocket: typeof import('./libs/module')['doSocket']
   const doView: typeof import('./libs/module')['doView']
   const effectScope: typeof import('vue')['effectScope']
   const getCurrentInstance: typeof import('vue')['getCurrentInstance']

@@ -1,4 +1,9 @@
-import { contextBridge } from 'electron'
+// +----------------------------------------------------------------------
+// | Author 唐启云 <tqy@fxri.net>
+// +----------------------------------------------------------------------
+// | Category 方弦研究所
+// +----------------------------------------------------------------------
+import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 
 // Custom APIs for renderer
@@ -20,3 +25,9 @@ if (process.contextIsolated) {
     // @ts-ignore (define in dts)
     window.api = api
 }
+
+contextBridge.exposeInMainWorld('doNative', {
+    store: (name: 'set' | 'get', data: any) =>
+        ipcRenderer.invoke('store', name, data),
+    openFile: () => ipcRenderer.invoke('openFile'),
+})

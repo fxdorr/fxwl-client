@@ -24,6 +24,9 @@
     const list = ref([{
         'title': '配置项',
         'url': '/config',
+    }, {
+        'title': '客户端',
+        'url': '/client/index',
     }])
 </script>
 
