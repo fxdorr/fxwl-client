@@ -5,6 +5,7 @@
   "main": "./out/main/index.js",
   "author": "唐启云",
   "homepage": "https://www.fxri.net",
+  "license": "MIT",
   "scripts": {
     "format": "prettier --write .",
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts,.vue --fix",
@@ -32,6 +33,7 @@
     "@electron-toolkit/tsconfig": "^1.0.1",
     "@electron/notarize": "^1.2.3",
     "@rushstack/eslint-patch": "^1.3.2",
+    "@types/jquery": "^3.5.18",
     "@types/node": "^18.16.19",
     "@vitejs/plugin-vue": "^4.2.3",
     "@vue/eslint-config-prettier": "^7.1.0",
