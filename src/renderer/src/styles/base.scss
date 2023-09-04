@@ -1,0 +1,36 @@
+/* 公共样式 */
+* {
+    margin: 0;
+    padding: 0;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
+html {
+    background: #ffffff;
+    touch-action: manipulation;
+}
+
+a {
+    cursor: pointer;
+}
+
+#app {
+    width: 100vw;
+    height: 100vh;
+}
+
+.fxy-layout {
+    min-width: 100vw;
+    min-height: 100vh;
+}
+
+.fxy-layout.scale {
+    position: relative;
+    min-width: 1920px;
+    min-height: 1080px;
+    width: 1920px;
+    height: 1080px;
+    transform-origin: left top;
+    overflow: hidden;
+}

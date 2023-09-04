@@ -1,6 +1,6 @@
 <template>
     <div class="fxyui-head">
-        方弦物联-客户端
+        方弦物联
     </div>
 </template>
 <style lang="scss">
