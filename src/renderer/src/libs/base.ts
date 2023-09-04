@@ -4,6 +4,7 @@
 // | Category 方弦研究所
 // +----------------------------------------------------------------------
 import { data as appStore } from '@/stores/app'
+import { data as panelStore } from '@/stores/panel'
 import { Router } from 'vue-router'
 /**
  * 应用
@@ -12,15 +13,15 @@ export const imApp: {
     /**
      * 应用时钟
      */
-    clock: Ref<string>
+    clock: globalThis.Ref<string>
     /**
      * 应用参数
      */
-    param: Ref
+    param: globalThis.Ref
     /**
      * 播放器列表
      */
-    players: Ref
+    players: globalThis.Ref
     /**
      * 通信服务
      */
@@ -28,7 +29,7 @@ export const imApp: {
 } = {
     clock: ref(''),
     param: ref({}),
-    players: ref({})
+    players: ref({}),
 }
 /**
  * 监听应用参数
@@ -46,6 +47,10 @@ export const imStore = {
      * 应用
      */
     app: toRefs(reactive(appStore)),
+    /**
+     * 面板
+     */
+    panel: toRefs(reactive(panelStore)),
 }
 /**
  * 视图
@@ -58,14 +63,14 @@ export const imView: {
     /**
      * 缩放比例
      */
-    scale: Ref<string>
+    scale: globalThis.Ref<string>
     /**
      * 数据部署
      */
-    deploy: Ref
+    deploy: globalThis.Ref
 } = {
     scale: ref(''),
-    deploy: ref({})
+    deploy: ref({}),
 }
 /**
  * 监听数据部署

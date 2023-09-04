@@ -9,11 +9,11 @@ import path from 'path'
 export default defineConfig({
     // 主程序
     main: {
-        plugins: [externalizeDepsPlugin()]
+        plugins: [externalizeDepsPlugin()],
     },
     // 预载器
     preload: {
-        plugins: [externalizeDepsPlugin()]
+        plugins: [externalizeDepsPlugin()],
     },
     // 渲染器
     renderer: {
@@ -23,29 +23,29 @@ export default defineConfig({
             AutoImport({
                 imports: ['vue'],
                 dirs: ['./src/libs'],
-                dts: 'src/auto-imports.d.ts'
+                dts: 'src/auto-imports.d.ts',
             }),
             Components({
                 resolvers: [ElementPlusResolver()],
-                dts: 'src/components.d.ts'
+                dts: 'src/components.d.ts',
             }),
             inject({
                 // 这里会自动载入 node_modules 中的 jquery jquery全局变量
                 $: 'jquery',
                 jQuery: 'jquery',
-                'windows.jQuery': 'jquery'
-            })
+                'windows.jQuery': 'jquery',
+            }),
         ],
         // 解决方案
         resolve: {
             alias: {
-                '@': path.resolve(__dirname, 'src/renderer/src')
-            }
+                '@': path.resolve(__dirname, 'src/renderer/src'),
+            },
         },
         // 服务器配置
         server: {
             host: '0.0.0.0',
-            port: 8080
-        }
-    }
+            port: 8070,
+        },
+    },
 })

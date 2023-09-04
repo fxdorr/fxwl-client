@@ -1,12 +1,11 @@
 <template>
-    <Header></Header>
+    <router-view></router-view>
 </template>
 
-<script setup lang="ts">
-    import Header from './components/base/Header.vue'
-    console.log($(window))
+<script lang="ts" setup>
+    import appStore from '@/stores/app'
+    import panelStore from '@/stores/panel'
+    // 配置存储
+    imStore.app = toRefs(appStore())
+    imStore.panel = toRefs(panelStore())
 </script>
-
-<style lang="scss">
-    @import '@/styles/base.scss';
-</style>

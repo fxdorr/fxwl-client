@@ -3,14 +3,8 @@
 // +----------------------------------------------------------------------
 // | Category 方弦研究所
 // +----------------------------------------------------------------------
-import { AppContext } from 'vue'
 import { LocationQueryRaw } from 'vue-router'
-import {
-    ElNotification,
-    ElMessage,
-    NotificationParams,
-    MessageParams
-} from 'element-plus'
+import { ElNotification, ElMessage } from 'element-plus'
 /**
  * 消息模块
  */
@@ -18,28 +12,25 @@ export const doInfo = {
     /**
      * 通知消息
      */
-    notice: function (options?: NotificationParams | undefined) {
+    notice: function (...args: any[]): void {
         setTimeout(() => {
             // 设置根元素
-            arguments[0].appendTo = '.fxy-layout'
+            args[0].appendTo = '.fxy-layout'
             // 弹出信息
-            ElNotification(options)
+            ElNotification(...args)
         }, 0)
     },
     /**
      * 消息提示
      */
-    message: function (
-        options?: MessageParams,
-        appContext?: AppContext | null | undefined
-    ) {
+    message: function (...args: any[]): void {
         setTimeout(() => {
             // 设置根元素
-            arguments[0].appendTo = '.fxy-layout'
+            args[0].appendTo = '.fxy-layout'
             // 弹出信息
-            ElMessage(options, appContext)
+            ElMessage(...args)
         }, 0)
-    }
+    },
 }
 /**
  * 参数模块
@@ -48,7 +39,7 @@ export const doParam = {
     /**
      * 定义变量
      */
-    define: function (base: any, data: any, empty: boolean = false) {
+    define: function (base: any, data: any, empty = false): any {
         // 定义变量
         $.each(data, function (key, value) {
             if (isObject(base[key]) && isObject(value) && !isEmpty(value)) {
@@ -62,11 +53,11 @@ export const doParam = {
     /**
      * 监听变量
      */
-    watch: function (name: string, base?: any) {
+    watch: function (name: string, base?: any): void {
         // 疏理基础
         if (!isObject(base)) return
         // 疏理数据
-        var data: any = localStorage.getItem(name)
+        let data: any = localStorage.getItem(name)
         if (isJson(data)) {
             data = JSON.parse(data)
         }
@@ -79,21 +70,21 @@ export const doParam = {
             (value) =>
                 localStorage.setItem(
                     name,
-                    !isString(value) ? JSON.stringify(value) : String(value)
+                    !isString(value) ? JSON.stringify(value) : String(value),
                 ),
-            { deep: true }
+            { deep: true },
         )
     },
     /**
      * 处理枚举
      */
-    enum: function (index: any, enums: any) {
+    enum: function (index: any, enums: any): void {
         // 处理枚举
         if (isString(enums)) {
             enums = JSON.parse(enums)
         }
         return isSet(enums[index]) ? enums[index] : ''
-    }
+    },
 }
 /**
  * 视图模块
@@ -106,8 +97,8 @@ export const doView = {
         width: number,
         height: number,
         boxW = $('#app').width(),
-        boxH = $('#app').height()
-    ) {
+        boxH = $('#app').height(),
+    ): string {
         // 定义宽高
         !boxW && (boxW = width)
         !boxH && (boxH = height)
@@ -117,17 +108,17 @@ export const doView = {
     /**
      * 跳转页面
      */
-    jump: function (url?: string, param?: LocationQueryRaw) {
+    jump: function (url?: string, param?: LocationQueryRaw): void {
         imView.router && imView.router.push({ path: url, query: param })
     },
     /**
      * 处理URL
      */
-    url: function (url: string) {
+    url: function (url: string): string {
         // 检查url
         if (!isUrl(url)) {
             url = imStore.app.uri_host.value + url
         }
         return url
-    }
+    },
 }
