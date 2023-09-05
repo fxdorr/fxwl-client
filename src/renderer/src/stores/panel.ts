@@ -5,7 +5,7 @@
 // +----------------------------------------------------------------------
 import { defineStore } from 'pinia'
 // 定义数据
-export const data: {
+const data: {
     /**
      * 窗口
      */
@@ -46,6 +46,10 @@ export const data: {
          * 开机自启
          */
         startup: boolean
+        /**
+         * HTTP缓存
+         */
+        http_cache: boolean
     }
     /**
      * 服务器
@@ -56,9 +60,9 @@ export const data: {
          */
         switch: boolean
         /**
-         * 地址
+         * 目录
          */
-        host: string
+        dir: string
         /**
          * 端口
          */
@@ -75,19 +79,11 @@ export const data: {
         isTop: false,
         isFocus: false,
         startup: false,
+        http_cache: false,
     },
     server: {
-        /**
-         * 开关
-         */
-        switch: true,
-        /**
-         * 地址
-         */
-        host: '0.0.0.0',
-        /**
-         * 端口
-         */
+        switch: false,
+        dir: 'website',
         port: '2602',
     },
 }
@@ -96,4 +92,4 @@ const store = defineStore('panel', {
     state: () => JSON.parse(JSON.stringify(data)),
     persist: true,
 })
-export default store
+export default { store: store, data: data }

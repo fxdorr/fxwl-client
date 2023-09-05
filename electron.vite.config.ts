@@ -13,10 +13,12 @@ import path from 'path'
 export default defineConfig({
     // 主程序
     main: {
+        // 插件数组
         plugins: [externalizeDepsPlugin(), bytecodePlugin()],
     },
     // 预加载脚本
     preload: {
+        // 插件数组
         plugins: [externalizeDepsPlugin(), bytecodePlugin()],
     },
     // 渲染器

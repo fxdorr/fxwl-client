@@ -35,24 +35,29 @@
                                 <el-switch v-model="imStore.panel.window.value.startup" size="large" inline-prompt style="--el-switch-on-color: #13ce66;" active-text="开启" inactive-text="关闭" />
                             </el-form-item>
                         </el-col>
-                        <el-col :span="4" :offset="1">
+                        <el-col :span="4">
                             <el-form-item label="全屏">
                                 <el-switch v-model="imStore.panel.window.value.fullscreen" size="large" inline-prompt style="--el-switch-on-color: #13ce66;" active-text="开启" inactive-text="关闭" />
                             </el-form-item>
                         </el-col>
-                        <el-col :span="4" :offset="1">
+                        <el-col :span="4">
                             <el-form-item label="无边框">
                                 <el-switch v-model="imStore.panel.window.value.frame" size="large" inline-prompt style="--el-switch-on-color: #13ce66;" active-text="开启" inactive-text="关闭" />
                             </el-form-item>
                         </el-col>
-                        <el-col :span="4" :offset="1">
+                        <el-col :span="4">
                             <el-form-item label="置顶">
                                 <el-switch v-model="imStore.panel.window.value.isTop" size="large" inline-prompt style="--el-switch-on-color: #13ce66;" active-text="开启" inactive-text="关闭" />
                             </el-form-item>
                         </el-col>
-                        <el-col :span="4" :offset="1">
+                        <el-col :span="4">
                             <el-form-item label="强制置顶">
                                 <el-switch v-model="imStore.panel.window.value.isFocus" size="large" inline-prompt style="--el-switch-on-color: #13ce66;" active-text="开启" inactive-text="关闭" />
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="4">
+                            <el-form-item label="HTTP缓存">
+                                <el-switch v-model="imStore.panel.window.value.http_cache" size="large" inline-prompt style="--el-switch-on-color: #13ce66;" active-text="开启" inactive-text="关闭" />
                             </el-form-item>
                         </el-col>
                     </el-row>
@@ -60,8 +65,8 @@
                     <el-form-item label="开关">
                         <el-switch v-model="imStore.panel.server.value.switch" size="large" inline-prompt style="--el-switch-on-color: #13ce66;" active-text="开启" inactive-text="关闭" />
                     </el-form-item>
-                    <el-form-item label="地址">
-                        <el-input v-model="imStore.panel.server.value.host" type="text" autocomplete="off" />
+                    <el-form-item label="目录">
+                        <el-input v-model="imStore.panel.server.value.dir" type="text" autocomplete="off" />
                     </el-form-item>
                     <el-form-item label="端口">
                         <el-input v-model="imStore.panel.server.value.port" type="text" autocomplete="off" />
@@ -74,6 +79,11 @@
                     </el-form-item>
                     <el-form-item label="页面地址（HTTP）">
                         <el-input v-model="imStore.client.url_host.value" type="text" autocomplete="off" />
+                    </el-form-item>
+                    <el-form-item label="返回按钮">
+                        <el-select v-model="imStore.client.back_btn.value" class="m-2" placeholder="Select" size="large">
+                            <el-option v-for="(item, index) in imStore.app.back_btns.value" :key="index" :label="index" :value="item" />
+                        </el-select>
                     </el-form-item>
                 </el-tab-pane>
             </el-tabs>
@@ -107,9 +117,7 @@
 <script lang="ts" setup>
     import { imApp, imStore, imView } from '@/libs/base'
     import { doView } from '@/libs/module'
-    import appStore from '@/stores/app'
-    import panelStore from '@/stores/panel'
-    import clientStore from '@/stores/client'
+    import store from '@/utils/store'
     // 配置索引
     function tabChange(name: any): void {
         imStore.app.panel_index.value = name
@@ -117,10 +125,9 @@
     // 刷新存储
     function reloadStore(): void {
         // 重置数据
-        const stores = { app: appStore, panel: panelStore, client: clientStore }
-        for (const index in stores) {
-            stores[index]().$reset()
-        }
+        $.each(imStore, function(key) {
+            store[key].store().$reset()
+        })
         // 清理缓存
         cleanCache()
     }
@@ -128,7 +135,6 @@
     function cleanCache(): void {
         // 清空参数
         imApp.param.value = {}
-        imApp.players.value = {}
         imView.deploy.value = {}
         // 刷新页面
         reloadPage()

@@ -5,8 +5,16 @@
 // +----------------------------------------------------------------------
 import { app, BrowserWindow, ipcMain, dialog } from 'electron'
 import Store from 'electron-store'
-import path from 'path'
+import * as http from 'http'
 import httpServer from 'http-server'
+import path from 'path'
+import fs from 'fs'
+/**
+ * 根路径
+ */
+const doRoot = app.isPackaged
+    ? path.resolve(app.getPath('exe'), '..')
+    : path.resolve(app.getAppPath())
 /**
  * 数据模块
  */
@@ -28,21 +36,37 @@ export const doData: {
      * 存储数据
      */
     store: Store
+    /**
+     * HTTP服务
+     */
+    server?: http.Server
 } = {
     app: {},
-    root: app.isPackaged
-        ? path.resolve(app.getPath('exe'), '..')
-        : path.resolve(app.getAppPath()),
-    store: app.isPackaged
-        ? new Store({ cwd: path.resolve(app.getPath('exe'), '../config') })
-        : new Store({ cwd: path.resolve(app.getAppPath(), 'config') }),
+    root: doRoot,
+    store: new Store({ cwd: path.resolve(doRoot, 'config') }),
 }
-// 创建http服务
-httpServer
-    .createServer({
-        root: 'e:/',
-    })
-    .listen(doData.store.get('panel.server.port') ?? 2602)
+/**
+ * 获取配置
+ */
+const config: any = doData.store.get('panel.server')
+/**
+ * 创建HTTP服务
+ */
+if (config?.switch) {
+    // 疏理配置
+    config?.port != undefined && (config.port -= 0)
+    // 创建目录
+    if (!fs.existsSync(path.resolve(doData.root, config.dir))) {
+        fs.mkdirSync(path.resolve(doData.root, config.dir))
+    }
+    // 创建服务
+    httpServer
+        .createServer({
+            root: path.resolve(doData.root, config.dir),
+            showDir: false,
+        })
+        .listen(typeof config?.port == 'number' ? config.port : 2602)
+}
 /**
  * 事件模块
  */

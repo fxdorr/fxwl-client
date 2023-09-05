@@ -3,9 +3,7 @@
 // +----------------------------------------------------------------------
 // | Category 方弦研究所
 // +----------------------------------------------------------------------
-import { data as appStore } from '@/stores/app'
-import { data as panelStore } from '@/stores/panel'
-import { data as clientStore } from '@/stores/client'
+import store from '@/utils/store'
 import { Router } from 'vue-router'
 /**
  * 应用
@@ -24,10 +22,6 @@ export const imApp: {
      */
     param: globalThis.Ref
     /**
-     * 播放器列表
-     */
-    players: globalThis.Ref
-    /**
      * 通信服务
      */
     socket?: WebSocket
@@ -35,16 +29,11 @@ export const imApp: {
     init: false,
     clock: ref(''),
     param: ref({}),
-    players: ref({}),
 }
 /**
  * 监听应用参数
  */
 doParam.watch('param', imApp)
-/**
- * 监听播放器列表
- */
-doParam.watch('players', imApp)
 /**
  * 存储
  */
@@ -52,15 +41,15 @@ export const imStore = {
     /**
      * 应用
      */
-    app: toRefs(reactive(appStore)),
+    app: toRefs(reactive(store.app.data)),
     /**
      * 面板
      */
-    panel: toRefs(reactive(panelStore)),
+    panel: toRefs(reactive(store.panel.data)),
     /**
      * 客户端
      */
-    client: toRefs(reactive(clientStore)),
+    client: toRefs(reactive(store.client.data)),
 }
 /**
  * 视图

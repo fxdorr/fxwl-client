@@ -11,7 +11,7 @@ export function isJson(data: any): boolean {
     try {
         data = JSON.parse(data)
         return typeof data == 'object' && data
-    } catch (e) {
+    } catch (error) {
         // code
     }
     return false
@@ -109,7 +109,7 @@ export function isHtml(data: any): boolean {
         if (data instanceof $) return true
         elem.appendChild(data.cloneNode(true))
         return data.nodeType == 1
-    } catch (e) {
+    } catch (error) {
         // code
     }
     return data == window || data == document

@@ -3,28 +3,31 @@
 </template>
 
 <script lang="ts" setup>
-    import appStore from '@/stores/app'
-    import panelStore from '@/stores/panel'
-    import clientStore from '@/stores/client'
+    import store from '@/utils/store'
     import { storeToRefs } from 'pinia'
     // 配置存储
-    const stores = { app: appStore, panel: panelStore, client: clientStore }
-    for (const index in stores) {
+    imStore.app = toRefs(store.app.store())
+    imStore.panel = toRefs(store.panel.store())
+    imStore.client = toRefs(store.client.store())
+    $.each(imStore, function(key) {
         // 终端数据
-        imStore[index] = toRefs(stores[index]())
         // 本地数据
-        window.doNative != undefined && doNative.store('get', index).then(function(res) {
+        window.doNative != undefined && doNative.store('get', key).then(function(res) {
+            if (res == undefined) {
+                store[key].store().$reset()
+            }
             $.each(res, function(key, value) {
-                imStore[index][key].value = value
+                imStore[key][key].value = value
             })
         })
         // 监听存储
         watch(
-            reactive(storeToRefs(stores[index]())),
+            reactive(storeToRefs(store[key].store())),
             (data) => {
                 window.doNative != undefined && doNative.store('set', {
-                    [index]: JSON.parse(JSON.stringify(data)) })
+                    [key]: JSON.parse(JSON.stringify(data))
+                })
             }, { deep: true },
         )
-    }
+    })
 </script>

@@ -5,7 +5,7 @@
 // +----------------------------------------------------------------------
 import { defineStore } from 'pinia'
 // 定义数据
-export const data = {
+const data = {
     /**
      * 标题
      */
@@ -22,10 +22,19 @@ export const data = {
      * 面板索引
      */
     panel_index: '0',
+    /**
+     * 返回按钮组
+     */
+    back_btns: {
+        左上: 'left: 0; right: auto; top: 0; bottom: auto;',
+        右上: 'left: auto; right: 0; top: 0; bottom: auto;',
+        右下: 'left: auto; right: 0; top: auto; bottom: 0;',
+        左下: 'left: 0; right: auto; top: auto; bottom: 0;',
+    },
 }
 // 定义存储
 const store = defineStore('app', {
     state: () => JSON.parse(JSON.stringify(data)),
     persist: true,
 })
-export default store
+export default { store: store, data: data }

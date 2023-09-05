@@ -8,32 +8,21 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon_mini.png?asset'
 import { doData, doEvent } from './base'
-
+// 获取配置
+const config: any = doData.store.get('panel.window')
+// 创建窗口
 function createWindow(): BrowserWindow {
-    // 获取配置
-    const config: any = doData.store.get('panel.window')
+    // 疏理配置
+    config?.width != undefined && (config.width -= 0)
+    config?.height != undefined && (config.height -= 0)
+    config?.x != undefined && (config.x -= 0)
+    config?.y != undefined && (config.y -= 0)
     // Create the browser window.
     const mainWindow = new BrowserWindow({
-        // 窗口宽度
-        width:
-            config?.width != undefined && config?.width - 0 > 0
-                ? config.width - 0
-                : 1280,
-        // 窗口高度
-        height:
-            config?.height != undefined && config?.height - 0 > 0
-                ? config.height - 0
-                : 720,
         // 窗口左边距
-        x:
-            config?.x != undefined && typeof (config?.x - 0) == 'number'
-                ? config.x - 0
-                : undefined,
+        x: typeof config?.x == 'number' ? config.x : undefined,
         // 窗口上边距
-        y:
-            config?.y != undefined && typeof (config?.y - 0) == 'number'
-                ? config.y - 0
-                : undefined,
+        y: typeof config?.y == 'number' ? config.y : undefined,
         // 窗口置顶
         alwaysOnTop: typeof config?.isTop == 'boolean' ? config.isTop : false,
         // 窗口全屏
@@ -56,11 +45,18 @@ function createWindow(): BrowserWindow {
         },
     })
 
+    mainWindow.setBounds({
+        // 窗口宽度
+        width: config?.width > 0 ? config.width : 1280,
+        // 窗口高度s
+        height: config?.height > 0 ? config.height : 720,
+    })
+
     mainWindow.on('ready-to-show', () => {
         // 显示窗口
         mainWindow.show()
         // 检测强制置顶
-        if (typeof config?.isFocus == 'boolean' && config?.isFocus) {
+        if (typeof config?.isFocus == 'boolean' && config.isFocus) {
             // 创建计时器
             let timer: any
             // 焦点检测
@@ -95,7 +91,10 @@ function createWindow(): BrowserWindow {
     }
     return mainWindow
 }
-
+//禁用http缓存
+if (typeof config?.http_cache == 'boolean' && !config.http_cache) {
+    app.commandLine.appendSwitch('--disable-http-cache')
+}
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
