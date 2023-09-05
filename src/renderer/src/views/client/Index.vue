@@ -1,7 +1,7 @@
 <template>
     <div class="fxy-layout">
         <div class="fxy-header">
-            <div class="back" @click="doView.jump('/')"></div>
+            <div class="back" :style="imStore.client.back_btn.value" @click="doView.jump('/')"></div>
         </div>
         <div class="fxy-panel">
             <iframe :src="imStore.client.url_host.value" frameborder="0"></iframe>
