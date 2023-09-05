@@ -5,7 +5,6 @@
 // +----------------------------------------------------------------------
 import { app, BrowserWindow, ipcMain, dialog } from 'electron'
 import Store from 'electron-store'
-import * as http from 'http'
 import httpServer from 'http-server'
 import path from 'path'
 import fs from 'fs'
@@ -36,14 +35,15 @@ export const doData: {
      * 存储数据
      */
     store: Store
-    /**
-     * HTTP服务
-     */
-    server?: http.Server
 } = {
     app: {},
     root: doRoot,
-    store: new Store({ cwd: path.resolve(doRoot, 'config') }),
+    store: new Store({
+        cwd: path.resolve(
+            doRoot,
+            app.isPackaged ? '../fxwl-local/config' : 'config',
+        ),
+    }),
 }
 /**
  * 获取配置
@@ -55,6 +55,10 @@ const config: any = doData.store.get('panel.server')
 if (config?.switch) {
     // 疏理配置
     config?.port != undefined && (config.port -= 0)
+    // 疏理目录
+    if (app.isPackaged) {
+        config.dir = '../fxwl-local/' + config.dir
+    }
     // 创建目录
     if (!fs.existsSync(path.resolve(doData.root, config.dir))) {
         fs.mkdirSync(path.resolve(doData.root, config.dir))

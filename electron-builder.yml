@@ -1,5 +1,6 @@
 appId: net.fxri.app
 productName: 方弦物联
+copyright: Copyright © 2023-2099 方弦研究所. All rights reserved.
 directories:
     buildResources: build
 files:

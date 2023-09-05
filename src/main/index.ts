@@ -8,6 +8,22 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon_mini.png?asset'
 import { doData, doEvent } from './base'
+/**
+ * 校验数字
+ */
+export function isNumeric(data: any): boolean {
+    // 初始化变量
+    switch (typeof data) {
+        case 'string':
+        // 字符串
+        // falls through
+        case 'number':
+            // 数值
+            data = data.toString()
+            return parseFloat(data) == data && !isNaN(data)
+    }
+    return false
+}
 // 获取配置
 const config: any = doData.store.get('panel.window')
 // 创建窗口
@@ -15,14 +31,16 @@ function createWindow(): BrowserWindow {
     // 疏理配置
     config?.width != undefined && (config.width -= 0)
     config?.height != undefined && (config.height -= 0)
-    config?.x != undefined && (config.x -= 0)
-    config?.y != undefined && (config.y -= 0)
     // Create the browser window.
     const mainWindow = new BrowserWindow({
+        // 窗口宽度
+        width: config?.width > 0 ? config.width : 1280,
+        // 窗口高度
+        height: config?.height > 0 ? config.height : 720,
         // 窗口左边距
-        x: typeof config?.x == 'number' ? config.x : undefined,
+        x: isNumeric(config?.x) ? config.x : undefined,
         // 窗口上边距
-        y: typeof config?.y == 'number' ? config.y : undefined,
+        y: isNumeric(config?.y) ? config.y : undefined,
         // 窗口置顶
         alwaysOnTop: typeof config?.isTop == 'boolean' ? config.isTop : false,
         // 窗口全屏
@@ -48,7 +66,7 @@ function createWindow(): BrowserWindow {
     mainWindow.setBounds({
         // 窗口宽度
         width: config?.width > 0 ? config.width : 1280,
-        // 窗口高度s
+        // 窗口高度
         height: config?.height > 0 ? config.height : 720,
     })
 
