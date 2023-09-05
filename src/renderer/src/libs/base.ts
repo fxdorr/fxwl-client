@@ -5,13 +5,16 @@
 // +----------------------------------------------------------------------
 import { data as appStore } from '@/stores/app'
 import { data as panelStore } from '@/stores/panel'
-import { data as serverStore } from '@/stores/server'
 import { data as clientStore } from '@/stores/client'
 import { Router } from 'vue-router'
 /**
  * 应用
  */
 export const imApp: {
+    /**
+     * 初始化
+     */
+    init: boolean
     /**
      * 应用时钟
      */
@@ -29,6 +32,7 @@ export const imApp: {
      */
     socket?: WebSocket
 } = {
+    init: false,
     clock: ref(''),
     param: ref({}),
     players: ref({}),
@@ -53,10 +57,6 @@ export const imStore = {
      * 面板
      */
     panel: toRefs(reactive(panelStore)),
-    /**
-     * 服务端
-     */
-    server: toRefs(reactive(serverStore)),
     /**
      * 客户端
      */

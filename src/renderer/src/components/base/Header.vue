@@ -1,10 +1,10 @@
 <template>
-    <div class="fxyui-head">
+    <div class="fxy-header">
         方弦物联
     </div>
 </template>
 <style lang="scss">
-    .fxyui-head {
+    .fxy-header {
         text-align: center;
     }
 </style>

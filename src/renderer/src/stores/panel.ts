@@ -47,6 +47,23 @@ export const data: {
          */
         startup: boolean
     }
+    /**
+     * 服务器
+     */
+    server: {
+        /**
+         * 开关
+         */
+        switch: boolean
+        /**
+         * 地址
+         */
+        host: string
+        /**
+         * 端口
+         */
+        port: string
+    }
 } = {
     window: {
         width: 1280,
@@ -58,6 +75,20 @@ export const data: {
         isTop: false,
         isFocus: false,
         startup: false,
+    },
+    server: {
+        /**
+         * 开关
+         */
+        switch: true,
+        /**
+         * 地址
+         */
+        host: '0.0.0.0',
+        /**
+         * 端口
+         */
+        port: '2602',
     },
 }
 // 定义存储

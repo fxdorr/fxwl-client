@@ -7,9 +7,9 @@ import { defineStore } from 'pinia'
 // 定义数据
 export const data = {
     /**
-     * 标题
+     * 页面地址
      */
-    title: '',
+    url_host: 'http://127.0.0.1:2602',
 }
 // 定义存储
 const store = defineStore('client', {

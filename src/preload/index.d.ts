@@ -9,11 +9,23 @@ declare global {
     interface Window {
         electron: ElectronAPI
         api: unknown
+        /**
+         * 本地模块
+         */
+        doNative: object
     }
     /**
      * 本地模块
      */
     const doNative: {
+        /**
+         * 重启应用
+         */
+        restart: function
+        /**
+         * 退出应用
+         */
+        quit: function
         /**
          * 打开文件
          */

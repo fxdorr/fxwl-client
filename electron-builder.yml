@@ -19,6 +19,10 @@ nsis:
     shortcutName: ${productName}
     uninstallDisplayName: ${productName}
     createDesktopShortcut: always
+    oneClick: false
+    allowToChangeInstallationDirectory: true
+    installerIcon: 'build/icon_mini.ico'
+    uninstallerIcon: 'build/icon_mini.ico'
 mac:
     entitlementsInherit: build/entitlements.mac.plist
     extendInfo:

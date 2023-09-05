@@ -10,15 +10,6 @@
                     <el-form-item label="调试模式">
                         <el-switch v-model="imStore.app.debug.value" size="large" inline-prompt style="--el-switch-on-color: #13ce66;" active-text="开启" inactive-text="关闭" />
                     </el-form-item>
-                    <el-form-item label="页面地址（HTTP）">
-                        <el-input v-model="imStore.app.url_host.value" type="text" autocomplete="off" />
-                    </el-form-item>
-                    <el-form-item label="接口地址（HTTP）">
-                        <el-input v-model="imStore.app.api_host.value" type="text" autocomplete="off" />
-                    </el-form-item>
-                    <el-form-item label="资源地址（HTTP）">
-                        <el-input v-model="imStore.app.uri_host.value" type="text" autocomplete="off" />
-                    </el-form-item>
                 </el-tab-pane>
                 <el-tab-pane label="面板">
                     <el-divider content-position="left">窗口配置</el-divider>
@@ -27,48 +18,62 @@
                             <el-form-item label="宽度">
                                 <el-input v-model="imStore.panel.window.value.width" type="text" autocomplete="off" />
                             </el-form-item>
-                            <el-form-item label="左边距">
-                                <el-input v-model="imStore.panel.window.value.x" type="text" autocomplete="off" />
-                            </el-form-item>
-                            <el-form-item label="全屏">
-                                <el-switch v-model="imStore.panel.window.value.fullscreen" size="large" inline-prompt style="--el-switch-on-color: #13ce66;" active-text="开启" inactive-text="关闭" />
-                            </el-form-item>
-                            <el-form-item label="无边框">
-                                <el-switch v-model="imStore.panel.window.value.frame" size="large" inline-prompt style="--el-switch-on-color: #13ce66;" active-text="开启" inactive-text="关闭" />
-                            </el-form-item>
-                            <el-form-item label="开机自启">
-                                <el-switch v-model="imStore.panel.window.value.startup" size="large" inline-prompt style="--el-switch-on-color: #13ce66;" active-text="开启" inactive-text="关闭" />
+                            <el-form-item label="高度">
+                                <el-input v-model="imStore.panel.window.value.height" type="text" autocomplete="off" />
                             </el-form-item>
                         </el-col>
                         <el-col :span="12" class="col-right">
-                            <el-form-item label="高度">
-                                <el-input v-model="imStore.panel.window.value.height" type="text" autocomplete="off" />
+                            <el-form-item label="左边距">
+                                <el-input v-model="imStore.panel.window.value.x" type="text" autocomplete="off" />
                             </el-form-item>
                             <el-form-item label="上边距">
                                 <el-input v-model="imStore.panel.window.value.y" type="text" autocomplete="off" />
                             </el-form-item>
+                        </el-col>
+                        <el-col :span="4">
+                            <el-form-item label="开机自启">
+                                <el-switch v-model="imStore.panel.window.value.startup" size="large" inline-prompt style="--el-switch-on-color: #13ce66;" active-text="开启" inactive-text="关闭" />
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="4" :offset="1">
+                            <el-form-item label="全屏">
+                                <el-switch v-model="imStore.panel.window.value.fullscreen" size="large" inline-prompt style="--el-switch-on-color: #13ce66;" active-text="开启" inactive-text="关闭" />
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="4" :offset="1">
+                            <el-form-item label="无边框">
+                                <el-switch v-model="imStore.panel.window.value.frame" size="large" inline-prompt style="--el-switch-on-color: #13ce66;" active-text="开启" inactive-text="关闭" />
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="4" :offset="1">
                             <el-form-item label="置顶">
                                 <el-switch v-model="imStore.panel.window.value.isTop" size="large" inline-prompt style="--el-switch-on-color: #13ce66;" active-text="开启" inactive-text="关闭" />
                             </el-form-item>
+                        </el-col>
+                        <el-col :span="4" :offset="1">
                             <el-form-item label="强制置顶">
                                 <el-switch v-model="imStore.panel.window.value.isFocus" size="large" inline-prompt style="--el-switch-on-color: #13ce66;" active-text="开启" inactive-text="关闭" />
                             </el-form-item>
                         </el-col>
                     </el-row>
-                </el-tab-pane>
-                <el-tab-pane label="服务端">
-                    <el-divider content-position="left">环境配置</el-divider>
-                    <el-form-item label="站点地址">
-                        <el-input v-model="imStore.server.host.value" type="text" autocomplete="off" />
+                    <el-divider content-position="left">服务器配置</el-divider>
+                    <el-form-item label="开关">
+                        <el-switch v-model="imStore.panel.server.value.switch" size="large" inline-prompt style="--el-switch-on-color: #13ce66;" active-text="开启" inactive-text="关闭" />
                     </el-form-item>
-                    <el-form-item label="站点端口">
-                        <el-input v-model="imStore.server.port.value" type="text" autocomplete="off" />
+                    <el-form-item label="地址">
+                        <el-input v-model="imStore.panel.server.value.host" type="text" autocomplete="off" />
+                    </el-form-item>
+                    <el-form-item label="端口">
+                        <el-input v-model="imStore.panel.server.value.port" type="text" autocomplete="off" />
                     </el-form-item>
                 </el-tab-pane>
                 <el-tab-pane label="客户端">
                     <el-divider content-position="left">环境配置</el-divider>
-                    <el-form-item label="终端标题">
-                        <el-input v-model="imStore.client.title.value" type="text" autocomplete="off" />
+                    <el-form-item label="默认页面">
+                        <el-switch v-model="imStore.app.url_default.value" size="large" inline-prompt style="--el-switch-on-color: #13ce66;" active-text="开启" inactive-text="关闭" active-value="/client/index" inactive-value="/" />
+                    </el-form-item>
+                    <el-form-item label="页面地址（HTTP）">
+                        <el-input v-model="imStore.client.url_host.value" type="text" autocomplete="off" />
                     </el-form-item>
                 </el-tab-pane>
             </el-tabs>
@@ -85,8 +90,16 @@
                 <el-button @click="doView.jump('/')">返回首页</el-button>
             </el-col>
             <el-col :span="8" class="op-right">
-                <el-button type="warning" @click="restartApp">重启应用</el-button>
-                <el-button type="danger" @click="exitApp">退出应用</el-button>
+                <el-popconfirm confirm-button-text="是" cancel-button-text="否" title="重启应用程序?" @confirm="restartApp">
+                    <template #reference>
+                        <el-button type="warning">重启应用</el-button>
+                    </template>
+                </el-popconfirm>
+                <el-popconfirm confirm-button-text="是" cancel-button-text="否" title="关闭应用程序?" @confirm="exitApp">
+                    <template #reference>
+                        <el-button type="danger">退出应用</el-button>
+                    </template>
+                </el-popconfirm>
             </el-col>
         </el-row>
     </div>
@@ -96,7 +109,6 @@
     import { doView } from '@/libs/module'
     import appStore from '@/stores/app'
     import panelStore from '@/stores/panel'
-    import serverStore from '@/stores/server'
     import clientStore from '@/stores/client'
     // 配置索引
     function tabChange(name: any): void {
@@ -105,10 +117,10 @@
     // 刷新存储
     function reloadStore(): void {
         // 重置数据
-        appStore().$reset()
-        panelStore().$reset()
-        serverStore().$reset()
-        clientStore().$reset()
+        const stores = { app: appStore, panel: panelStore, client: clientStore }
+        for (const index in stores) {
+            stores[index]().$reset()
+        }
         // 清理缓存
         cleanCache()
     }
@@ -127,11 +139,11 @@
     }
     // 重启应用
     function restartApp(): void {
-        // doNative.store('set', { '测试数据': '测试数据2' })
+        doNative.restart()
     }
     // 退出应用
     function exitApp(): void {
-        window.location.reload()
+        doNative.quit()
     }
 </script>
 <style lang="scss" scoped>

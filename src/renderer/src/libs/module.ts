@@ -122,7 +122,7 @@ export const doView = {
     url: function (url: string): string {
         // 检查url
         if (!isUrl(url)) {
-            url = imStore.app.uri_host.value + url
+            url = imStore.client.url_host.value + url
         }
         return url
     },

@@ -49,7 +49,7 @@ export default defineConfig({
         // 服务器配置
         server: {
             host: '0.0.0.0',
-            port: 8070,
+            port: 2601,
         },
     },
 })

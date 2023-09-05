@@ -15,17 +15,9 @@ export const data = {
      */
     debug: false,
     /**
-     * 页面地址
+     * 默认页面
      */
-    url_host: 'http://127.0.0.1',
-    /**
-     * 接口地址
-     */
-    api_host: 'http://127.0.0.1',
-    /**
-     * 资源地址
-     */
-    uri_host: 'http://127.0.0.1',
+    url_default: '/',
     /**
      * 面板索引
      */
