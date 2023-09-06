@@ -62,15 +62,24 @@
                         </el-col>
                     </el-row>
                     <el-divider content-position="left">服务器配置</el-divider>
-                    <el-form-item label="开关">
-                        <el-switch v-model="imStore.panel.server.value.switch" size="large" inline-prompt style="--el-switch-on-color: #13ce66;" active-text="开启" inactive-text="关闭" />
-                    </el-form-item>
-                    <el-form-item label="目录">
-                        <el-input v-model="imStore.panel.server.value.dir" type="text" autocomplete="off" />
-                    </el-form-item>
-                    <el-form-item label="端口">
-                        <el-input v-model="imStore.panel.server.value.port" type="text" autocomplete="off" />
-                    </el-form-item>
+                    <el-row>
+                        <el-col :span="12">
+                            <el-form-item label="开关">
+                                <el-switch v-model="imStore.panel.server.value.switch" size="large" inline-prompt style="--el-switch-on-color: #13ce66;" active-text="开启" inactive-text="关闭" />
+                            </el-form-item>
+                            <el-form-item label="目录">
+                                <el-input v-model="imStore.panel.server.value.dir" type="text" autocomplete="off" />
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="12" class="col-right">
+                            <el-form-item label="端口占用提示">
+                                <el-switch v-model="imStore.panel.server.value.port_prompt" size="large" inline-prompt style="--el-switch-on-color: #13ce66;" active-text="开启" inactive-text="关闭" />
+                            </el-form-item>
+                            <el-form-item label="端口">
+                                <el-input v-model="imStore.panel.server.value.port" type="text" autocomplete="off" />
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
                 </el-tab-pane>
                 <el-tab-pane label="客户端">
                     <el-divider content-position="left">环境配置</el-divider>

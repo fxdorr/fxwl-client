@@ -7,7 +7,7 @@ import { app, shell, BrowserWindow } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon_mini.png?asset'
-import { doData, doEvent } from './base'
+import { doBase } from './base'
 /**
  * 校验数字
  */
@@ -25,7 +25,7 @@ export function isNumeric(data: any): boolean {
     return false
 }
 // 获取配置
-const config: any = doData.store.get('panel.window')
+const config: any = doBase.store.get('panel.window')
 // 创建窗口
 function createWindow(): BrowserWindow {
     // 疏理配置
@@ -131,7 +131,7 @@ app.whenReady().then(() => {
     const mainWindow = createWindow()
 
     // 注册事件
-    doEvent.register(mainWindow)
+    doBase.register(mainWindow)
 
     app.on('activate', function () {
         // On macOS it's common to re-create a window in the app when the

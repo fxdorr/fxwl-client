@@ -67,6 +67,10 @@ const data: {
          * 端口
          */
         port: string
+        /**
+         * 端口占用提示
+         */
+        port_prompt: boolean
     }
 } = {
     window: {
@@ -85,6 +89,7 @@ const data: {
         switch: false,
         dir: 'website',
         port: '2602',
+        port_prompt: false,
     },
 }
 // 定义存储
