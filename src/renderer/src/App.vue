@@ -16,8 +16,8 @@
             if (res == undefined) {
                 store[key].store().$reset()
             }
-            $.each(res, function(key, value) {
-                imStore[key][key].value = value
+            $.each(res, function(key2, value2) {
+                imStore[key][key2].value = value2
             })
         })
         // 监听存储

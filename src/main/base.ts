@@ -6,25 +6,9 @@
 import { app, BrowserWindow, ipcMain, dialog } from 'electron'
 import Store from 'electron-store'
 import httpServer from 'http-server'
-import net from 'net'
+import shell from 'child_process'
 import path from 'path'
 import fs from 'fs'
-// /**
-//  * 检测端口占用
-//  */
-// export function isBindPort(port: number): boolean {
-//     let resut
-//     const server = net.createServer()
-//     server.on('error', (err) => {
-//         console.log(err)
-//         console.log(err.message)
-//         console.log(err.stack)
-//         console.log(err.name)
-//         console.log(err.cause)
-//     })
-//     server.listen(port)
-//     return false
-// }
 /**
  * 根路径
  */
@@ -75,66 +59,25 @@ export const doBase: {
     },
 }
 /**
- * 获取配置
- */
-const config: any = doBase.store.get('panel.server')
-/**
- * 创建HTTP服务
- */
-if (config?.switch) {
-    // 疏理配置
-    config?.port != undefined && (config.port -= 0)
-    typeof config?.port != 'number' && (config.port = 2602)
-    // 疏理目录
-    if (app.isPackaged) {
-        config.dir = '../fxwl-local/' + config.dir
-    }
-    // 创建目录
-    if (!fs.existsSync(path.resolve(doBase.root, config.dir))) {
-        fs.mkdirSync(path.resolve(doBase.root, config.dir))
-    }
-    // // 检测端口占用
-    // console.log(config.port)
-    // console.log(isBindPort(config.port))
-    // isPortAvailable(config.port).then((event) => {
-    //     console.log(event)
-    // })
-    // 创建服务
-    httpServer
-        .createServer({
-            root: path.resolve(doBase.root, config.dir),
-            showDir: false,
-        })
-        .listen(config.port)
-}
-/**
  * 事件模块
  */
-export const doEvent: {
+export const doEvent = {
     /**
      * 重启应用
      */
-    restart: any
-    /**
-     * 退出应用
-     */
-    quit: any
-    /**
-     * 数据存储
-     */
-    store: any
-    /**
-     * 打开文件
-     */
-    openFile: any
-} = {
     restart: function (): void {
         app.relaunch()
         app.quit()
     },
-    quit: function (): any {
+    /**
+     * 退出应用
+     */
+    quit: function (): void {
         app.quit()
     },
+    /**
+     * 数据存储
+     */
     store: function (_event: any, name: 'set' | 'get', data: any): any {
         switch (name) {
             case 'set':
@@ -159,6 +102,9 @@ export const doEvent: {
                 return doBase.store.get(data)
         }
     },
+    /**
+     * 打开文件
+     */
     openFile: async function (): Promise<any> {
         // 校验窗口
         if (doBase.app.mainWindow == undefined) return
@@ -170,5 +116,48 @@ export const doEvent: {
         if (!canceled) {
             return filePaths
         }
+    },
+    /**
+     * 创建HTTP服务
+     */
+    httpServer: function (): void {
+        // 获取配置
+        const app: any = doBase.store.get('app')
+        const config: any = doBase.store.get('panel.server')
+        // 校验开关
+        if (!config?.switch) return
+        // 疏理配置
+        config?.port != undefined && (config.port -= 0)
+        typeof config?.port != 'number' && (config.port = 2602)
+        config?.dir == undefined && (config.dir = 'website')
+        // 疏理目录
+        if (app.isPackaged) {
+            config.dir = '../fxwl-local/' + config.dir
+        }
+        // 创建目录
+        if (!fs.existsSync(path.resolve(doBase.root, config.dir))) {
+            fs.mkdirSync(path.resolve(doBase.root, config.dir))
+        }
+        // 检测端口占用
+        shell.exec('netstat -ano | findstr ' + config.port, (_err, stdout) => {
+            // 校验输出
+            if (stdout != '') {
+                config?.port_prompt &&
+                    doBase.app.mainWindow &&
+                    dialog.showMessageBox(doBase.app.mainWindow, {
+                        message: '端口：' + config.port + '已被占用',
+                        title: app?.title ?? '方弦物联',
+                    })
+                return false
+            }
+            // 创建服务
+            httpServer
+                .createServer({
+                    root: path.resolve(doBase.root, config.dir),
+                    showDir: false,
+                })
+                .listen(config.port)
+            return true
+        })
     },
 }

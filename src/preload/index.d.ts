@@ -4,7 +4,6 @@
 // | Category 方弦研究所
 // +----------------------------------------------------------------------
 import { ElectronAPI } from '@electron-toolkit/preload'
-
 declare global {
     interface Window {
         electron: ElectronAPI
