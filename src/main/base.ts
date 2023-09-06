@@ -122,42 +122,47 @@ export const doEvent = {
      */
     httpServer: function (): void {
         // 获取配置
-        const app: any = doBase.store.get('app')
-        const config: any = doBase.store.get('panel.server')
+        const config: { app: any; server: any } = {
+            app: doBase.store.get('app'),
+            server: doBase.store.get('panel.server'),
+        }
         // 校验开关
-        if (!config?.switch) return
+        if (!config.server?.switch) return
         // 疏理配置
-        config?.port != undefined && (config.port -= 0)
-        typeof config?.port != 'number' && (config.port = 2602)
-        config?.dir == undefined && (config.dir = 'website')
+        config.server?.port != undefined && (config.server.port -= 0)
+        typeof config.server?.port != 'number' && (config.server.port = 2602)
+        config.server?.dir == undefined && (config.server.dir = 'website')
         // 疏理目录
         if (app.isPackaged) {
-            config.dir = '../fxwl-local/' + config.dir
+            config.server.dir = '../fxwl-local/' + config.server.dir
         }
         // 创建目录
-        if (!fs.existsSync(path.resolve(doBase.root, config.dir))) {
-            fs.mkdirSync(path.resolve(doBase.root, config.dir))
+        if (!fs.existsSync(path.resolve(doBase.root, config.server.dir))) {
+            fs.mkdirSync(path.resolve(doBase.root, config.server.dir))
         }
         // 检测端口占用
-        shell.exec('netstat -ano | findstr ' + config.port, (_err, stdout) => {
-            // 校验输出
-            if (stdout != '') {
-                config?.port_prompt &&
-                    doBase.app.mainWindow &&
-                    dialog.showMessageBox(doBase.app.mainWindow, {
-                        message: '端口：' + config.port + '已被占用',
-                        title: app?.title ?? '方弦物联',
+        shell.exec(
+            'netstat -ano | findstr ' + config.server.port,
+            (_err, stdout) => {
+                // 校验输出
+                if (stdout != '') {
+                    config.server?.port_prompt &&
+                        doBase.app.mainWindow &&
+                        dialog.showMessageBox(doBase.app.mainWindow, {
+                            message: '端口：' + config.server.port + '已被占用',
+                            title: config.app?.title ?? '方弦物联',
+                        })
+                    return false
+                }
+                // 创建服务
+                httpServer
+                    .createServer({
+                        root: path.resolve(doBase.root, config.server.dir),
+                        showDir: false,
                     })
-                return false
-            }
-            // 创建服务
-            httpServer
-                .createServer({
-                    root: path.resolve(doBase.root, config.dir),
-                    showDir: false,
-                })
-                .listen(config.port)
-            return true
-        })
+                    .listen(config.server.port)
+                return true
+            },
+        )
     },
 }

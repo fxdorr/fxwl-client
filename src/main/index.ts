@@ -25,29 +25,39 @@ export function isNumeric(data: any): boolean {
     return false
 }
 // 获取配置
-const config: any = doBase.store.get('panel.window')
+const config: { window: any } = {
+    window: doBase.store.get('panel.window'),
+}
 // 创建窗口
 function createWindow(): BrowserWindow {
     // 疏理配置
-    config?.width != undefined && (config.width -= 0)
-    config?.height != undefined && (config.height -= 0)
+    config.window?.width != undefined && (config.window.width -= 0)
+    config.window?.height != undefined && (config.window.height -= 0)
     // Create the browser window.
     const mainWindow = new BrowserWindow({
         // 窗口宽度
-        width: config?.width > 0 ? config.width - 0 : 1280,
+        width: config.window?.width > 0 ? config.window.width - 0 : 1280,
         // 窗口高度
-        height: config?.height > 0 ? config.height - 0 : 720,
+        height: config.window?.height > 0 ? config.window.height - 0 : 720,
         // 窗口左边距
-        x: isNumeric(config?.x) ? config.x - 0 : undefined,
+        x: isNumeric(config.window?.x) ? config.window.x - 0 : undefined,
         // 窗口上边距
-        y: isNumeric(config?.y) ? config.y - 0 : undefined,
+        y: isNumeric(config.window?.y) ? config.window.y - 0 : undefined,
         // 窗口置顶
-        alwaysOnTop: typeof config?.isTop == 'boolean' ? config.isTop : false,
+        alwaysOnTop:
+            typeof config.window?.isTop == 'boolean'
+                ? config.window.isTop
+                : false,
         // 窗口全屏
         fullscreen:
-            typeof config?.fullscreen == 'boolean' ? config.fullscreen : false,
+            typeof config.window?.fullscreen == 'boolean'
+                ? config.window.fullscreen
+                : false,
         // 窗口边框
-        frame: typeof config?.frame == 'boolean' ? !config.frame : true,
+        frame:
+            typeof config.window?.frame == 'boolean'
+                ? !config.window.frame
+                : true,
         // 窗口是否在创建时显示
         show: false,
         // 自动隐藏菜单栏
@@ -64,15 +74,18 @@ function createWindow(): BrowserWindow {
     })
     mainWindow.setBounds({
         // 窗口宽度
-        width: config?.width > 0 ? config.width - 0 : 1280,
+        width: config.window?.width > 0 ? config.window.width - 0 : 1280,
         // 窗口高度
-        height: config?.height > 0 ? config.height - 0 : 720,
+        height: config.window?.height > 0 ? config.window.height - 0 : 720,
     })
     mainWindow.on('ready-to-show', () => {
         // 显示窗口
         mainWindow.show()
         // 检测强制置顶
-        if (typeof config?.isFocus == 'boolean' && config.isFocus) {
+        if (
+            typeof config.window?.isFocus == 'boolean' &&
+            config.window.isFocus
+        ) {
             // 创建计时器
             let timer: any
             // 焦点检测
@@ -106,7 +119,10 @@ function createWindow(): BrowserWindow {
     return mainWindow
 }
 //禁用http缓存
-if (typeof config?.http_cache == 'boolean' && !config.http_cache) {
+if (
+    typeof config.window?.http_cache == 'boolean' &&
+    !config.window.http_cache
+) {
     app.commandLine.appendSwitch('--disable-http-cache')
 }
 // This method will be called when Electron has finished
