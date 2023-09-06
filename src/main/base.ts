@@ -136,9 +136,19 @@ export const doEvent = {
         if (app.isPackaged) {
             config.server.dir = '../fxwl-local/' + config.server.dir
         }
-        // 创建目录
-        if (!fs.existsSync(path.resolve(doBase.root, config.server.dir))) {
+        // 疏理目录
+        if (fs.existsSync(path.resolve(config.server.dir))) {
+            // 自定义目录
+            config.server.dir = path.resolve(config.server.dir)
+        } else if (
+            !fs.existsSync(path.resolve(doBase.root, config.server.dir))
+        ) {
+            // 创建目录
             fs.mkdirSync(path.resolve(doBase.root, config.server.dir))
+            config.server.dir = path.resolve(doBase.root, config.server.dir)
+        } else {
+            // 目录已存在
+            config.server.dir = path.resolve(doBase.root, config.server.dir)
         }
         // 检测端口占用
         shell.exec(
@@ -157,7 +167,7 @@ export const doEvent = {
                 // 创建服务
                 httpServer
                     .createServer({
-                        root: path.resolve(doBase.root, config.server.dir),
+                        root: config.server.dir,
                         showDir: false,
                     })
                     .listen(config.server.port)

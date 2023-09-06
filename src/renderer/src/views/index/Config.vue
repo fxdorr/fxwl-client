@@ -10,6 +10,14 @@
                     <el-form-item label="调试模式">
                         <el-switch v-model="imStore.app.debug.value" size="large" inline-prompt style="--el-switch-on-color: #13ce66;" active-text="开启" inactive-text="关闭" />
                     </el-form-item>
+                    <el-form-item label="默认跳转客户端">
+                        <el-switch v-model="imStore.app.url_default.value" size="large" inline-prompt style="--el-switch-on-color: #13ce66;" active-text="开启" inactive-text="关闭" active-value="/client/index" inactive-value="/" />
+                    </el-form-item>
+                    <el-popconfirm confirm-button-text="是" cancel-button-text="否" title="重置为默认值?" @confirm="reloadStore('app')">
+                        <template #reference>
+                            <el-button>重置选项</el-button>
+                        </template>
+                    </el-popconfirm>
                 </el-tab-pane>
                 <el-tab-pane label="面板">
                     <el-divider content-position="left">窗口配置</el-divider>
@@ -80,12 +88,14 @@
                             </el-form-item>
                         </el-col>
                     </el-row>
+                    <el-popconfirm confirm-button-text="是" cancel-button-text="否" title="重置为默认值?" @confirm="reloadStore('panel')">
+                        <template #reference>
+                            <el-button>重置选项</el-button>
+                        </template>
+                    </el-popconfirm>
                 </el-tab-pane>
                 <el-tab-pane label="客户端">
                     <el-divider content-position="left">环境配置</el-divider>
-                    <el-form-item label="默认页面">
-                        <el-switch v-model="imStore.app.url_default.value" size="large" inline-prompt style="--el-switch-on-color: #13ce66;" active-text="开启" inactive-text="关闭" active-value="/client/index" inactive-value="/" />
-                    </el-form-item>
                     <el-form-item label="页面地址（HTTP）">
                         <el-input v-model="imStore.client.url_host.value" type="text" autocomplete="off" />
                     </el-form-item>
@@ -94,13 +104,18 @@
                             <el-option v-for="(item, index) in imStore.app.back_btns.value" :key="index" :label="index" :value="item" />
                         </el-select>
                     </el-form-item>
+                    <el-popconfirm confirm-button-text="是" cancel-button-text="否" title="重置为默认值?" @confirm="reloadStore('client')">
+                        <template #reference>
+                            <el-button>重置选项</el-button>
+                        </template>
+                    </el-popconfirm>
                 </el-tab-pane>
             </el-tabs>
         </el-form>
         <el-row class="fxy-footer">
             <el-col :span="16">
                 <el-button type="success" @click="reloadPage">刷新页面</el-button>
-                <el-popconfirm confirm-button-text="是" cancel-button-text="否" title="重置为默认值?" @confirm="reloadStore">
+                <el-popconfirm confirm-button-text="是" cancel-button-text="否" title="重置为默认值?" @confirm="reloadStore()">
                     <template #reference>
                         <el-button>全部重置</el-button>
                     </template>
@@ -132,13 +147,19 @@
         imStore.app.panel_index.value = name
     }
     // 刷新存储
-    function reloadStore(): void {
+    function reloadStore(name ? : 'app' | 'panel' | 'client'): void {
+        if (name != undefined) {
+            store[name].store().$reset()
+            // 刷新页面
+            reloadPage()
+            return
+        }
         // 重置数据
         $.each(imStore, function(key) {
             store[key].store().$reset()
         })
-        // 清理缓存
-        cleanCache()
+        // 刷新页面
+        reloadPage()
     }
     // 清理缓存
     function cleanCache(): void {
