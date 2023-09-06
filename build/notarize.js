@@ -15,7 +15,7 @@ module.exports = async (context) => {
         return
     }
 
-    const appId = 'net.fxri.app'
+    const appId = 'net.fxri.fxwl-client'
 
     const { appOutDir } = context
 

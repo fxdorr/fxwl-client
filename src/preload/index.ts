@@ -26,6 +26,7 @@ if (process.contextIsolated) {
 contextBridge.exposeInMainWorld('doNative', {
     restart: () => ipcRenderer.invoke('restart'),
     quit: () => ipcRenderer.invoke('quit'),
+    shell: (name: string) => ipcRenderer.invoke('shell', name),
     store: (name: 'set' | 'get', data: any) =>
         ipcRenderer.invoke('store', name, data),
     openFile: () => ipcRenderer.invoke('openFile'),

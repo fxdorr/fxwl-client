@@ -26,7 +26,11 @@ declare global {
          */
         quit: function
         /**
-         * 打开文件
+         * 命令脚本
+         */
+        shell: function
+        /**
+         * 数据存储
          */
         store: any
         /**

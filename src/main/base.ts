@@ -76,6 +76,12 @@ export const doEvent = {
         app.quit()
     },
     /**
+     * 命令脚本
+     */
+    shell: function (command: string): void {
+        shell.exec(command)
+    },
+    /**
      * 数据存储
      */
     store: function (_event: any, name: 'set' | 'get', data: any): any {
@@ -134,21 +140,17 @@ export const doEvent = {
         config.server?.dir == undefined && (config.server.dir = 'website')
         // 疏理目录
         if (app.isPackaged) {
-            config.server.dir = '../fxwl-local/' + config.server.dir
-        }
-        // 疏理目录
-        if (fs.existsSync(path.resolve(config.server.dir))) {
-            // 自定义目录
-            config.server.dir = path.resolve(config.server.dir)
-        } else if (
-            !fs.existsSync(path.resolve(doBase.root, config.server.dir))
-        ) {
-            // 创建目录
-            fs.mkdirSync(path.resolve(doBase.root, config.server.dir))
-            config.server.dir = path.resolve(doBase.root, config.server.dir)
+            config.server.dir = path.resolve(
+                doBase.root,
+                '../fxwl-local/',
+                config.server.dir,
+            )
         } else {
-            // 目录已存在
             config.server.dir = path.resolve(doBase.root, config.server.dir)
+        }
+        // 创建目录
+        if (!fs.existsSync(config.server.dir)) {
+            fs.mkdirSync(config.server.dir)
         }
         // 检测端口占用
         shell.exec(
@@ -164,7 +166,7 @@ export const doEvent = {
                         })
                     return false
                 }
-                // 创建服务
+                // 创建HTTP服务
                 httpServer
                     .createServer({
                         root: config.server.dir,

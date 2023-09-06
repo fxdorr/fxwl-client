@@ -100,7 +100,7 @@
                         <el-input v-model="imStore.client.url_host.value" type="text" autocomplete="off" />
                     </el-form-item>
                     <el-form-item label="返回按钮">
-                        <el-select v-model="imStore.client.back_btn.value" class="m-2" placeholder="Select" size="large">
+                        <el-select v-model="imStore.client.back_btn.value" class="m-2" placeholder="选择按钮位置" size="large">
                             <el-option v-for="(item, index) in imStore.app.back_btns.value" :key="index" :label="index" :value="item" />
                         </el-select>
                     </el-form-item>
