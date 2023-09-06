@@ -34,13 +34,13 @@ function createWindow(): BrowserWindow {
     // Create the browser window.
     const mainWindow = new BrowserWindow({
         // 窗口宽度
-        width: config?.width > 0 ? config.width : 1280,
+        width: config?.width > 0 ? config.width - 0 : 1280,
         // 窗口高度
-        height: config?.height > 0 ? config.height : 720,
+        height: config?.height > 0 ? config.height - 0 : 720,
         // 窗口左边距
-        x: isNumeric(config?.x) ? config.x : undefined,
+        x: isNumeric(config?.x) ? config.x - 0 : undefined,
         // 窗口上边距
-        y: isNumeric(config?.y) ? config.y : undefined,
+        y: isNumeric(config?.y) ? config.y - 0 : undefined,
         // 窗口置顶
         alwaysOnTop: typeof config?.isTop == 'boolean' ? config.isTop : false,
         // 窗口全屏
@@ -64,9 +64,9 @@ function createWindow(): BrowserWindow {
     })
     mainWindow.setBounds({
         // 窗口宽度
-        width: config?.width > 0 ? config.width : 1280,
+        width: config?.width > 0 ? config.width - 0 : 1280,
         // 窗口高度
-        height: config?.height > 0 ? config.height : 720,
+        height: config?.height > 0 ? config.height - 0 : 720,
     })
     mainWindow.on('ready-to-show', () => {
         // 显示窗口
