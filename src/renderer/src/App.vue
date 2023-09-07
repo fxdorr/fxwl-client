@@ -5,12 +5,12 @@
 <script lang="ts" setup>
     import store from '@/utils/store'
     import { storeToRefs } from 'pinia'
-    // 配置存储
+    // 终端数据
     imStore.app = toRefs(store.app.store())
     imStore.panel = toRefs(store.panel.store())
     imStore.client = toRefs(store.client.store())
+    // 配置存储
     $.each(imStore, function(key) {
-        // 终端数据
         // 本地数据
         window.doNative != undefined && doNative.store('get', key).then(function(res) {
             if (res == undefined) {
