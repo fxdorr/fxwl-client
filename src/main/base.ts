@@ -154,7 +154,7 @@ export const doEvent = {
         }
         // 检测端口占用
         shell.exec(
-            'netstat -ano | findstr ' + config.server.port,
+            'netstat -ano | findstr /R "' + config.server.port + '.*LISTENING"',
             (_err, stdout) => {
                 // 校验输出
                 if (stdout != '') {
