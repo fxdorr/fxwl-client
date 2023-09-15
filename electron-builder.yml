@@ -1,6 +1,6 @@
 appId: net.fxri.fxwl-client
-productName: 方弦物联
-copyright: Copyright © 2023-2099 方弦研究所. All rights reserved.
+productName: 方弦物联：客户端
+copyright: Copyright © 2023 方弦研究所. All rights reserved.
 directories:
     buildResources: build
 files:
@@ -18,7 +18,7 @@ afterSign: build/notarize.js
 win:
     executableName: fxwl-client
 nsis:
-    artifactName: ${name}-${version}-setup.${ext}
+    artifactName: ${description}-${version}.${ext}
     shortcutName: ${productName}
     uninstallDisplayName: ${productName}
     createDesktopShortcut: always
@@ -34,7 +34,7 @@ mac:
         - NSDocumentsFolderUsageDescription: Application requests access to the user's Documents folder.
         - NSDownloadsFolderUsageDescription: Application requests access to the user's Downloads folder.
 dmg:
-    artifactName: ${name}-${version}.${ext}
+    artifactName: ${description}-${version}.${ext}
 linux:
     target:
         - AppImage
@@ -43,7 +43,7 @@ linux:
     maintainer: electronjs.org
     category: Utility
 appImage:
-    artifactName: ${name}-${version}.${ext}
+    artifactName: ${description}-${version}.${ext}
 npmRebuild: false
 publish:
     provider: generic
