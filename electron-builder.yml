@@ -1,5 +1,5 @@
-appId: net.fxri.${name}
-productName: ${description}
+appId: net.fxri.fxwl-client
+productName: 方弦物联：展示终端
 copyright: Copyright © 2023 方弦研究所. All rights reserved.
 directories:
     buildResources: build
@@ -16,7 +16,7 @@ asarUnpack:
     - resources/**
 afterSign: build/notarize.js
 win:
-    executableName: ${name}
+    executableName: fxwl-client
 nsis:
     artifactName: ${description}-${version}.${ext}
     shortcutName: ${productName}
