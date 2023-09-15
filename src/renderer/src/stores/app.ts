@@ -19,6 +19,14 @@ const data = {
      */
     url_default: '/',
     /**
+     * 页面列表
+     */
+    url_list: {
+        首页: '/',
+        配置项: '/config',
+        客户端: '/client/index',
+    },
+    /**
      * 面板索引
      */
     panel_index: '0',
@@ -26,7 +34,7 @@ const data = {
      * 返回按钮组
      */
     back_btns: {
-        左上: 'left: 0; right: auto; top: 0; bottom: auto;',
+        '左上（默认）': 'left: 0; right: auto; top: 0; bottom: auto;',
         右上: 'left: auto; right: 0; top: 0; bottom: auto;',
         右下: 'left: auto; right: 0; top: auto; bottom: 0;',
         左下: 'left: 0; right: auto; top: auto; bottom: 0;',

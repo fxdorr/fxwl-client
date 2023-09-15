@@ -10,8 +10,10 @@
                     <el-form-item label="调试模式">
                         <el-switch v-model="imStore.app.debug.value" size="large" inline-prompt style="--el-switch-on-color: #13ce66;" active-text="开启" inactive-text="关闭" />
                     </el-form-item>
-                    <el-form-item label="默认跳转客户端">
-                        <el-switch v-model="imStore.app.url_default.value" size="large" inline-prompt style="--el-switch-on-color: #13ce66;" active-text="开启" inactive-text="关闭" active-value="/client/index" inactive-value="/" />
+                    <el-form-item label="默认页面">
+                        <el-select v-model="imStore.app.url_default.value" class="m-2" placeholder="选择默认页面" size="large">
+                            <el-option v-for="(item, index) in imStore.app.url_list.value" :key="index" :label="index" :value="item" />
+                        </el-select>
                     </el-form-item>
                     <el-popconfirm confirm-button-text="是" cancel-button-text="否" title="重置为默认值?" @confirm="reloadStore('app')">
                         <template #reference>
@@ -69,14 +71,15 @@
                             </el-form-item>
                         </el-col>
                     </el-row>
-                    <el-divider content-position="left">服务器配置</el-divider>
+                    <el-divider content-position="left">网站配置</el-divider>
                     <el-row>
                         <el-col :span="12">
                             <el-form-item label="开关">
                                 <el-switch v-model="imStore.panel.server.value.switch" size="large" inline-prompt style="--el-switch-on-color: #13ce66;" active-text="开启" inactive-text="关闭" />
                             </el-form-item>
                             <el-form-item label="目录">
-                                <el-input v-model="imStore.panel.server.value.dir" type="text" autocomplete="off" />
+                                <el-input v-model="imStore.panel.server.value.dir" type="text" autocomplete="off" style="width: calc(100% - 88px);" />
+                                <el-button type="warning" @click="chooseDir">选择目录</el-button>
                             </el-form-item>
                         </el-col>
                         <el-col :span="12" class="col-right">
@@ -160,6 +163,16 @@
         })
         // 刷新页面
         reloadPage()
+    }
+    // 选择目录
+    async function chooseDir(): Promise < void > {
+        const data = await doNative.openFile({
+            title: '选择目录',
+            properties: ['openDirectory'],
+        })
+        if (!isBlank(data)) {
+            imStore.panel.server.value.dir = data
+        }
     }
     // 清理缓存
     function cleanCache(): void {

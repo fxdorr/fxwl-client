@@ -29,5 +29,5 @@ contextBridge.exposeInMainWorld('doNative', {
     shell: (name: string) => ipcRenderer.invoke('shell', name),
     store: (name: 'set' | 'get', data: any) =>
         ipcRenderer.invoke('store', name, data),
-    openFile: () => ipcRenderer.invoke('openFile'),
+    openFile: (option: object) => ipcRenderer.invoke('openFile', option),
 })

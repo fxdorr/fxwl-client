@@ -74,8 +74,7 @@ router.afterEach(() => {
     // 初始化页面
     if (!imApp.init) {
         // 跳转默认页面
-        imStore.app.url_default.value != '/' &&
-            doView.jump(imStore.app.url_default.value)
+        doView.jump(imStore.app.url_default.value)
         // 完成初始化
         imApp.init = true
     }

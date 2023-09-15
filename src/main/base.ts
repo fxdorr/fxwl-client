@@ -111,12 +111,13 @@ export const doEvent = {
     /**
      * 打开文件
      */
-    openFile: async function (): Promise<any> {
+    openFile: async function (_event: any, option: object): Promise<any> {
         // 校验窗口
         if (doBase.app.mainWindow == undefined) return
         // 打开文件
         const { canceled, filePaths } = await dialog.showOpenDialog(
             doBase.app.mainWindow,
+            option,
         )
         // 返回数据
         if (!canceled) {
